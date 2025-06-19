@@ -20,8 +20,7 @@
 
 ### Material {-}
 
- Las
-de este semestre están en [este repositorio](https://github.com/felipegonzalez/aprendizaje-maquina-riesgos-2025),
+El material de este trimestre está en [este repositorio](https://github.com/felipegonzalez/aprendizaje-maquina-riesgos-2025),
 incluyendo ejemplos, ejercicios y tareas.
 
 ### Referencias principales {-}
