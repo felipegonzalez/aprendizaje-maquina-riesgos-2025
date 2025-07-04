@@ -1,8 +1,6 @@
 # Introducción {#introduccion}
 
-
-## ¿Qué es aprendizaje de máquina (machine learning)? 
-
+## ¿Qué es aprendizaje de máquina (machine learning)?
 
 ```{r}
 #| include: false
@@ -13,78 +11,41 @@ scale_colour_discrete <- function(...) {
 }
 ```
 
-Métodos **computacionales** para **aprender de datos**  con el fin
-de producir reglas para 
-mejorar el **desempeño** en alguna tarea o toma de decisión. Nos
-interesan principalmente aquellas tareas o decisiones que se
-toman de manera repetida y donde el costo de cada error es relativamente
-bajo. 
+Métodos **computacionales** para **aprender de datos** con el fin de producir reglas para mejorar el **desempeño** en alguna tarea o toma de decisión. Nos interesan principalmente aquellas tareas o decisiones que se toman de manera repetida y donde el costo de cada error es relativamente bajo.
 
-En este curso nos enfocamos en las tareas de *aprendizaje supervisado* (predecir o estimar una variable respuesta a partir de datos de entrada) y *aprendizaje no supervisado* (describir estructuras interesantes en datos,
-donde no necesariamente hay una respuesta que predecir). Existe también
-*aprendizaje por refuerzo*, en donde buscamos aprender a tomar decisiones
-en un entorno en donde la decisión afecta directa e inmediatamente al entorno.
+En este curso nos enfocamos en las tareas de *aprendizaje supervisado* (predecir o estimar una variable respuesta a partir de datos de entrada) y *aprendizaje no supervisado* (describir estructuras interesantes en datos, donde no necesariamente hay una respuesta que predecir). Existe también *aprendizaje por refuerzo*, en donde buscamos aprender a tomar decisiones en un entorno en donde la decisión afecta directa e inmediatamente al entorno.
 
 Las tareas más apropiadas para este enfoque, en general, son aquellas en donde:
 
-- Existe una cantidad considerable de datos relevantes para aprender a ejecutar la tarea.
-- El costo por errores al ejecutar la tarea es relativamente bajo (al menos comparado con alternativas).
-- La tarea se repite de manera más o menos homogénea una cantidad grande de veces.
+-   Existe una cantidad considerable de datos relevantes para aprender a ejecutar la tarea.
+-   El costo por errores al ejecutar la tarea es relativamente bajo (al menos comparado con alternativas).
+-   La tarea se repite de manera más o menos homogénea una cantidad grande de veces.
 
-Aunque es posible extender lo que veremos a contextos más generales, cuando uno
-de los tres anteriores requisitos no se cumple es mejor usar o complementar con
-otros enfoques.
+Aunque es posible extender lo que veremos a contextos más generales, cuando uno de los tres anteriores requisitos no se cumple es mejor usar o complementar con otros enfoques.
 
+#### Ejemplos de tareas de aprendizaje: {.unnumbered}
 
-#### Ejemplos de tareas de aprendizaje: {-}
+-   Predecir si un cliente de tarjeta de crédito va a caer en impago en los próximos tres meses.
+-   Reconocer palabras escritas a mano (OCR).
+-   Detectar llamados de ballenas en grabaciones de boyas.
+-   Estimar el ingreso mensual de un hogar a partir de las características de la vivienda, posesiones y equipamiento y localización geográfica.
+-   Dividir a los clientes de Netflix según sus gustos.
+-   Recomendar artículos a clientes de un programa de lealtad o servicio online.
 
-- Predecir si un cliente de tarjeta de crédito va a caer en impago en los próximos
-tres meses.
-- Reconocer palabras escritas a mano (OCR).
-- Detectar llamados de ballenas en grabaciones de boyas. 
-- Estimar el ingreso mensual de un hogar a partir de las características
-de la vivienda, posesiones y equipamiento y localización geográfica.
-- Dividir a los clientes de Netflix según sus gustos.
-- Recomendar artículos a clientes de un programa de lealtad o servicio online.
+Las razones usuales para intentar resolver estos problemas **computacionalmente** son diversas:
 
-Las razones usuales para intentar resolver estos problemas **computacionalmente**
-son diversas:
+-   Quisiéramos obtener una respuesta barata, rápida, **automatizada**, y con suficiente precisión. Por ejemplo, reconocer caracteres en una placa de coche de una fotografía se puede hacer por personas, pero eso es lento y costoso. Igual oír cada segundo de grabación de las boyas para saber si hay ballenas o no. Hacer mediciones directas del ingreso de un hogar requiere mucho tiempo y esfuerzo.
+-   Quisiéramos **superar el desempeño actual** de los expertos o de reglas simples utilizando datos: por ejemplo, en la decisión de dar o no un préstamo a un solicitante, puede ser posible tomar mejores decisiones con algoritmos que con evaluaciones personales o con reglas simples que toman en cuenta el ingreso mensual, por ejemplo.
+-   Al resolver estos problemas computacionalmente tenemos oportunidad de aprender más del problema que nos interesa: estas soluciones forman parte de un ciclo de **análisis de datos** donde podemos aprender de una forma más concentrada cuáles son características y patrones importantes de nuestros datos.
 
-- Quisiéramos obtener una respuesta barata, rápida, **automatizada**, y 
-con suficiente precisión.
-Por ejemplo, reconocer caracteres en una placa de coche de una fotografía 
-se puede hacer por personas, pero eso es lento y costoso. Igual oír cada segundo de grabación
-de las boyas para saber si hay ballenas o no. Hacer mediciones directas
-del ingreso de un hogar requiere mucho tiempo y esfuerzo.
-- Quisiéramos **superar el desempeño actual** de los expertos o de reglas simples utilizando
-datos: por ejemplo, en la decisión de dar o no un préstamo a un solicitante,
-puede ser posible tomar mejores decisiones con algoritmos que con evaluaciones personales
-o con reglas simples que toman en cuenta el ingreso mensual, por ejemplo.
-- Al resolver estos problemas computacionalmente tenemos
-oportunidad de aprender más del problema que nos interesa: estas
-soluciones forman parte de un ciclo de **análisis de datos** donde podemos 
-aprender de una forma más concentrada cuáles son
-características y patrones importantes de nuestros datos.
+Es posible aproximarse a todos estos problemas usando reglas (por ejemplo, si los pixeles del centro de la imagen están vacíos, entonces es un cero, si el crédito total es mayor al 50% del ingreso anual, declinar el préstamo, etc). Las razones para no tomar un enfoque de reglas construidas "a mano":
 
-
-Es posible aproximarse a todos estos problemas usando reglas (por ejemplo,
-si los pixeles del centro de la imagen están vacíos, entonces es un cero, 
-si el crédito total es mayor al 50\% del ingreso anual, declinar el préstamo, etc). 
-Las razones para no tomar un enfoque de reglas construidas "a mano":
-
-- Cuando conjuntos de reglas creadas a mano se desempeñan mal (por ejemplo, para otorgar créditos, reconocer caracteres, etc.)
-- Reglas creadas a mano pueden ser difíciles de mantener (por ejemplo, un corrector
-ortográfico), pues para problemas interesantes muchas veces se requieren grandes
-cantidades de reglas. Por ejemplo: ¿qué búsquedas www se enfocan en
-dar direcciones como resultados? ¿cómo filtrar comentarios no aceptables
-en foros?
-
+-   Cuando conjuntos de reglas creadas a mano se desempeñan mal (por ejemplo, para otorgar créditos, reconocer caracteres, etc.)
+-   Reglas creadas a mano pueden ser difíciles de mantener (por ejemplo, un corrector ortográfico), pues para problemas interesantes muchas veces se requieren grandes cantidades de reglas. Por ejemplo: ¿qué búsquedas www se enfocan en dar direcciones como resultados? ¿cómo filtrar comentarios no aceptables en foros?
 
 ## Ejemplo: reglas y aprendizaje
 
-*Lectura de un medidor mediante imágenes*. Supongamos que en
-una infraestructura donde hay medidores análogos (de agua, electricidad, gas, etc.) que no se comunican. ¿Podríamos pensar en utilizar
-fotos tomadas automáticamente para medir el consumo?
+*Lectura de un medidor mediante imágenes*. Supongamos que en una infraestructura donde hay medidores análogos (de agua, electricidad, gas, etc.) que no se comunican. ¿Podríamos pensar en utilizar fotos tomadas automáticamente para medir el consumo?
 
 Por ejemplo, consideramos el siguiente problema (tomado de [aquí](https://community.openhab.org/t/water-meter-digitizer-version-2-all-in-device-including-mqtt/107188), ver [código y datos](https://github.com/jomjol/water-meter-system-complete)):
 
@@ -101,20 +62,15 @@ par(mar = c(1, 1, 1, 1))
 plot(medidor, axes = FALSE)
 ```
 
-Nótese que las imágenes y videos son matrices o arreglos de valores de pixeles, por ejemplo
-estas son las dimensiones para una imagen:
+Nótese que las imágenes y videos son matrices o arreglos de valores de pixeles, por ejemplo estas son las dimensiones para una imagen:
 
 ```{r}
 dim(medidor)
 ```
 
-En este caso, la imagen es de 193 x 193 pixeles y tiene tres canales, o 
-tres matrices de 193 x 193 donde la entrada de cada matriz es la intensidad
-del canal correspondiente. Buscámos hacer cálculos con estas matrices para extraer la información
-que queremos. En este caso, construiremos estos cálculos a mano.
+En este caso, la imagen es de 193 x 193 pixeles y tiene tres canales, o tres matrices de 193 x 193 donde la entrada de cada matriz es la intensidad del canal correspondiente. Buscámos hacer cálculos con estas matrices para extraer la información que queremos. En este caso, construiremos estos cálculos a mano.
 
-Primero filtramos (extraemos canal rojo y azul, restamos, difuminamos y
-aplicamos un umbral):
+Primero filtramos (extraemos canal rojo y azul, restamos, difuminamos y aplicamos un umbral):
 
 ```{r}
 medidor_rojo <- medidor |>  R() 
@@ -123,7 +79,6 @@ medidor_1 <- (medidor_rojo - medidor_azul) |> isoblur(5)
 aguja <-  medidor_1 |>  imager::threshold("90%", approx = FALSE)
 ```
 
-
 ```{r, echo=FALSE, fig.width=12, fig.height=4}
 layout(t(1:3))
 plot(medidor, axes = FALSE)
@@ -131,11 +86,7 @@ plot(medidor_1, axes = FALSE)
 plot(aguja, axes = FALSE)
 ```
 
-Logramos extraer la aguja, aunque hay algo de ruido adicional.
-Una estrategia es extraer la componente conexa más grande (que debería
-corresponder a la aguja), y luego calcular su orientación. Una manera fácil
-es encontrar una recta que vaya del centro de la imagen hasta el punto más alejado
-del centro (aunque quizá puedes pensar maneras más robustas de hacer esto):
+Logramos extraer la aguja, aunque hay algo de ruido adicional. Una estrategia es extraer la componente conexa más grande (que debería corresponder a la aguja), y luego calcular su orientación. Una manera fácil es encontrar una recta que vaya del centro de la imagen hasta el punto más alejado del centro (aunque quizá puedes pensar maneras más robustas de hacer esto):
 
 ```{r}
 #| message: false
@@ -154,7 +105,6 @@ calcular_punta <- function(pixset){
 }
 ```
 
-
 ```{r, echo=FALSE}
 #| message: false
 #| eval: false
@@ -169,8 +119,7 @@ with(calcular_punta(aguja) |>
     points(x, y, col="red"))
 ```
 
-Y ahora podemos aplicar el proceso de arriba
-a todas la imágenes:
+Y ahora podemos aplicar el proceso de arriba a todas la imágenes:
 
 ```{r}
 path_imgs <- list.files(path = path_img)
@@ -190,7 +139,6 @@ angulos <- path_full_imgs[indice_imgs] |>
   bind_rows()
 ```
 
-
 ```{r, fig.width=4, fig.height=3}
 angulos_tbl <- angulos |> 
   mutate(y_medidor = y_imagenes[indice_imgs])
@@ -199,17 +147,11 @@ ggplot(angulos_tbl,
   geom_point() + xlab("Ángulo")
 ```
 
-El desempeño no es muy malo pero tiene algunas fallas grandes. Quizá refinando nuestro
-*pipeline* de procesamiento podemos mejorarlo.
+El desempeño no es muy malo pero tiene algunas fallas grandes. Quizá refinando nuestro *pipeline* de procesamiento podemos mejorarlo.
 
+------------------------------------------------------------------------
 
----
-
-Por el contrario, en el **enfoque de aprendizaje**, comenzamos con un conjunto de datos **etiquetado**
-(por una persona, por un método costoso, etc.), y utilizamos alguna
-estructura general para aprender a producir la respuesta a partir
-de las imágenes. Por ejemplo, en este caso podríamos una red
-convolucional sobre los valores de los pixeles de la imagen:
+Por el contrario, en el **enfoque de aprendizaje**, comenzamos con un conjunto de datos **etiquetado** (por una persona, por un método costoso, etc.), y utilizamos alguna estructura general para aprender a producir la respuesta a partir de las imágenes. Por ejemplo, en este caso podríamos una red convolucional sobre los valores de los pixeles de la imagen:
 
 ```{r}
 #| label: prep-imagenes
@@ -226,7 +168,6 @@ y_entrena <- y_imagenes[indices_entrena] / 10
 x_valida <- x[-indices_entrena,,,]
 y_valida <- y_imagenes[-indices_entrena] / 10
 ```
-
 
 ```{r}
 modelo_aguja <- keras_model_sequential() |>
@@ -247,6 +188,7 @@ modelo_aguja <- keras_model_sequential() |>
   layer_dropout(0.2) |> 
   layer_dense(units = 1, activation = 'linear')
 ```
+
 Ajustamos el modelo:
 
 ```{r}
@@ -266,14 +208,13 @@ modelo_aguja |> fit(
   batch_size = 64,
   validation_data = list(x_valida, y_valida)
 )
-save_model(modelo_aguja, "cache/modelo-aguja.keras")
+#save_model(modelo_aguja, "cache/modelo-aguja.keras")
 ```
 
 ```{r}
 modelo <- load_model("cache/modelo-aguja.keras")
 modelo
 ```
-
 
 Y observamos que obtenemos predicciones prometedoras:
 
@@ -285,45 +226,15 @@ ggplot(preds_tbl, aes(x = preds, y = y)) +
   geom_abline(colour = 'red')
 ```
 
-De forma que podemos resolver este problema con algoritmos generales,
-sin tener que aplicar métodos sofisticados de
-procesamiento de imágenes. El enfoque de aprendizaje es particularmente
-efectivo cuando hay cantidades grandes de datos poco ruidosos, y aunque
-en este ejemplo los dos enfoques dan resultados razonables, 
-en procesamiento de imágenes es cada vez más común usar redes neuronales
-grandes para resolver este tipo de problemas.
+De forma que podemos resolver este problema con algoritmos generales, sin tener que aplicar métodos sofisticados de procesamiento de imágenes. El enfoque de aprendizaje es particularmente efectivo cuando hay cantidades grandes de datos poco ruidosos, y aunque en este ejemplo los dos enfoques dan resultados razonables, en procesamiento de imágenes es cada vez más común usar redes neuronales grandes para resolver este tipo de problemas.
 
+## Ejemplo: mediciones costosas {#sec-medicioncostosa}
 
-## Ejemplo:  mediciones costosas {#sec-medicioncostosa}
+En algunos casos, el estándar de la medición que nos interesa es uno que es costoso de cumplir: a veces se dice que *etiquetar* los datos es costoso. Un ejemplo es producir las estimaciones de ingreso trimestral de un hogar que se recolecta en la ENIGH (ver [aquí](https://www.inegi.org.mx/programas/enigh/nc/2018/)). En este caso particular, se utiliza esta encuesta como datos etiquetados para poder estimar el ingreso de otros hogares que no están en la muestra del ENIGH, pero para los que se conocen características de las vivienda, características de los integrantes, y otras medidas que son más fácilmente recolectadas en encuestas de opinión.
 
+Veremos otro ejemplo: estimar el valor de mercado de las casas en venta de una región. Es posible que tengamos un inventario de casas con varias de sus características registradas, pero producir estimaciones correctas de su valor de mercado puede requerir de inspecciones costosas de expertos, o tomar aproximaciones imprecisas de esta cantidad (por ejemplo, cuál es el precio ofertado).
 
-En algunos casos, el estándar de la medición que nos interesa es uno que
-es costoso de cumplir: a veces se dice que *etiquetar* los datos es
-costoso. Un ejemplo es producir las estimaciones de ingreso trimestral
-de un hogar que se recolecta en la ENIGH (ver
-[aquí](https://www.inegi.org.mx/programas/enigh/nc/2018/)). En este caso
-particular, se utiliza esta encuesta como datos etiquetados para poder
-estimar el ingreso de otros hogares que no están en la muestra del
-ENIGH, pero para los que se conocen características de las vivienda,
-características de los integrantes, y otras medidas que son más
-fácilmente recolectadas en encuestas de opinión.
-
-Veremos otro ejemplo: estimar el valor de mercado de las casas en venta
-de una región. Es posible que tengamos un inventario de casas con varias
-de sus características registradas, pero producir estimaciones correctas
-de su valor de mercado puede requerir de inspecciones costosas de
-expertos, o tomar aproximaciones imprecisas de esta cantidad (por
-ejemplo, cuál es el precio ofertado).
-
-Utilizaremos datos de casas que se [vendieron en Ames, Iowa en cierto
-periodo](https://www.kaggle.com/prevek18/ames-housing-dataset). En este
-caso, conocemos el valor a la que se vendió una casa. Buscamos producir
-una estimación para otras casas para las cuales conocemos
-características como su localización, superficie en metros cuadrados,
-año de construcción, espacio de estacionamiento, y así sucesivamente.
-Estas medidas son más fáciles de recolectar, y quisiéramos producir una
-estimación de su precio de venta en términos de estas medidas.
-
+Utilizaremos datos de casas que se [vendieron en Ames, Iowa en cierto periodo](https://www.kaggle.com/prevek18/ames-housing-dataset). En este caso, conocemos el valor a la que se vendió una casa. Buscamos producir una estimación para otras casas para las cuales conocemos características como su localización, superficie en metros cuadrados, año de construcción, espacio de estacionamiento, y así sucesivamente. Estas medidas son más fáciles de recolectar, y quisiéramos producir una estimación de su precio de venta en términos de estas medidas.
 
 En este ejemplo intentaremos una forma simple de predecir.
 
@@ -346,12 +257,7 @@ g_2 <- ggplot(casas_entrena, aes(x = area_hab_m2,
 g_1 + g_2
 ```
 
-La variable de condición de venta no podemos utilizarla para predecir,
-pues sólo la conocemos una vez que la venta se hace. Sin embargo,
-nos interesa principalemente entender qué sucede cuando las casas se venden
-en condiciones normales. Consideramos además
-del área habitable, 
-por ejemplo, la calidad general de terminados:
+La variable de condición de venta no podemos utilizarla para predecir, pues sólo la conocemos una vez que la venta se hace. Sin embargo, nos interesa principalemente entender qué sucede cuando las casas se venden en condiciones normales. Consideramos además del área habitable, por ejemplo, la calidad general de terminados:
 
 ```{r areacalidad, fig.cap = "Precio vs área y calidad", fig.width=6, fig.height=3}
 ggplot(casas_entrena |>  
@@ -365,9 +271,7 @@ ggplot(casas_entrena |>
   geom_smooth(method = "lm", se = FALSE, formula = "y ~ x")
 ```
 
-Vemos que estas dos variables que hemos usado explican buena parte de la
-variación de los precios de las casas. Podemos examinar otras variables como la existencia 
-y tamaño del garage:
+Vemos que estas dos variables que hemos usado explican buena parte de la variación de los precios de las casas. Podemos examinar otras variables como la existencia y tamaño del garage:
 
 ```{r, fig.width=7, fig.height=3}
 ggplot(casas_entrena |>  filter(condicion_venta == "Normal"),
@@ -379,12 +283,9 @@ Y quizá podríamos proponer una fórmula simple de la forma:
 
 $$Precio = a[\textrm{Calidad}] + b[\textrm{Calidad}]\, Area + c\, \textrm{AreaGarage} + d\,\textrm{TieneGarage}$$
 
-donde los valores de $a[\textrm{Calidad}] , b[\textrm{Calidad}], c, d$ podríamos estimarlos de
-los datos. La pendiente de Area
-dependende de la calificación de la calidad de los terminados.
+donde los valores de $a[\textrm{Calidad}] , b[\textrm{Calidad}], c, d$ podríamos estimarlos de los datos. La pendiente de Area dependende de la calificación de la calidad de los terminados.
 
-Nuestro proceso comenzaría entonces construir los datos para usar en el
-modelo:
+Nuestro proceso comenzaría entonces construir los datos para usar en el modelo:
 
 ```{r}
 receta_casas <- 
@@ -413,8 +314,7 @@ ajuste <- fit(flujo_casas, casas_entrena)
 ajuste
 ```
 
-Y ahora podemos hacer predicciones para nuevos datos no observados en el
-entrenamiento:
+Y ahora podemos hacer predicciones para nuevos datos no observados en el entrenamiento:
 
 ```{r}
 set.seed(8)
@@ -426,8 +326,7 @@ predict(ajuste, ejemplos) |>
   fmt_number(columns = everything(), decimals = 1)
 ```
 
-Y finalmente podemos evaluar nuestro modelo. En este casos mostramos diversas
-métricas como ejemplo:
+Y finalmente podemos evaluar nuestro modelo. En este casos mostramos diversas métricas como ejemplo:
 
 ```{r}
 metricas <- metric_set(mape, mae, rmse)
@@ -447,11 +346,7 @@ ggplot(casas_prueba_f |>
   xlab("Predicción (miles)") + ylab("Precio (miles)")
 ```
 
-Este modelo tiene algunos defectos y todavía tiene error
-considerablemente grande. La mejora sin embargo podemos
-cuantificarla con un modelo base o *benchmark*. En este caso
-utilizamos el siguiente modelo simple, cuya predicción es el
-promedio de entrenamiento:
+Este modelo tiene algunos defectos y todavía tiene error considerablemente grande. La mejora sin embargo podemos cuantificarla con un modelo base o *benchmark*. En este caso utilizamos el siguiente modelo simple, cuya predicción es el promedio de entrenamiento:
 
 ```{r}
 # nearest neighbors es grande, así que la predicción
@@ -469,46 +364,21 @@ metricas(casas_prueba |> bind_cols(predict(ajuste_base, casas_prueba)),
   fmt_number(columns = where(is_double), decimals = 1)
 ```
 
-
-
 ## Aprendizaje supervisado y no supervisado
 
-Las tareas de aprendizaje se dividen en dos grandes partes: aprendizaje
-supervisado y aprendizaje no supervisado.
+Las tareas de aprendizaje se dividen en dos grandes partes: aprendizaje supervisado y aprendizaje no supervisado.
 
+En **Aprendizaje supervisado** buscamos construir un modelo o algoritmo para predecir o estimar un *target* o una *respuesta* a partir de ciertas variables de entrada.
 
-En **Aprendizaje supervisado** buscamos construir un modelo o algoritmo para
-predecir o estimar un *target* o una *respuesta* a partir
-de ciertas variables de entrada.
+Predecir y estimar, en este contexto, se refieren a cosas similares. Generalmente se usa *predecir* cuando se trata de variables que no son observables ahora, sino en el futuro, y *estimar* cuando nos interesan variables actuales que no podemos observar ahora por costos o por la naturaleza del fenómeno.
 
-Predecir y estimar, en este contexto, se refieren a cosas similares. Generalmente
-se usa
-*predecir* cuando se trata de variables que no son observables ahora, sino en el futuro,
-y 
-*estimar* cuando nos interesan variables actuales que no podemos observar ahora
-por costos o por la naturaleza del fenómeno.
+Por ejemplo, para identificar a los clientes con alto riesgo de impago de tarjeta de crédito, utilizamos datos históricos de clientes que han pagado y no han pagado. Con estos datos entrenamos un algoritmo para detectar anticipadamente los clientes con alto riesgo de impago.
 
+Usualmente dividimos los problemas de aprendizaje supervisado en dos tipos, dependiendo de la variables salida:
 
-Por ejemplo, para identificar a los clientes con alto riesgo de impago
-de tarjeta de crédito, utilizamos datos históricos de clientes que han pagado
-y no han pagado. Con estos datos entrenamos un algoritmo para detectar anticipadamente los
-clientes con alto riesgo de impago.
+-   Problemas de **regresión**: cuando la salida es una variable numérica. El ejemplo de estimación de ingreso es un problema de regresión
+-   Problemas de **clasificación**: cuando la salida es una variable categórica. El ejemplo de detección de dígitos escritos a manos es un problema de clasificación.
 
-Usualmente dividimos los problemas de aprendizaje supervisado en dos tipos,
-dependiendo de la variables salida:
+En contraste, en **Aprendizaje no supervisado** no hay *target* o variable respuesta. Buscamos modelar y entender las relaciones entre variables y entre observaciones, o patrones importantes o interesantes en los datos.
 
-- Problemas de **regresión**: cuando la salida es una variable numérica. El ejemplo
-de estimación de ingreso es un problema de regresión
-- Problemas de **clasificación**: cuando la salida es una variable categórica. El
-ejemplo de detección de dígitos escritos a manos es un problema de clasificación.
-
-
-En contraste, en  **Aprendizaje no supervisado**  no hay *target*
-o variable respuesta. Buscamos modelar y entender las relaciones entre variables
-y entre observaciones, o patrones importantes o interesantes en los datos.
-
-Los problemas supervisados tienen un objetivo claro: hacer las mejores
-predicciones posibles bajo ciertas restricciones. Los problemas no supervisados
-tienden a tener objetivos más vagos, y por lo mismo pueden ser más difíciles.
-
-
+Los problemas supervisados tienen un objetivo claro: hacer las mejores predicciones posibles bajo ciertas restricciones. Los problemas no supervisados tienden a tener objetivos más vagos, y por lo mismo pueden ser más difíciles.

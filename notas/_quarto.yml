@@ -7,7 +7,7 @@ book:
   chapters:
     - index.qmd
     - 01-introduccion.qmd
-
+    - 02-principios-supervisado.qmd
 
 bibliography: referencias/book.bib
 
