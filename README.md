@@ -2,6 +2,6 @@
 
 Código para Notas y material para el curso de Aprendizaje de Máquina. 
 
-Las notas están en [en esta liga](https://felipegonzalez.github.io/aprendizaje-maquina-riesgos-2024/)
+Las notas están en [en esta liga](https://felipegonzalez.github.io/aprendizaje-maquina-riesgos-2025/)
 
 
