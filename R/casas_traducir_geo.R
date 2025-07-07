@@ -57,3 +57,4 @@ casas_f <- casas_f %>% mutate(area_sotano_m2 = area_sotano * m2,
   mutate(precio_m2_miles = precio_miles / area_hab_m2)
 
 casas <- casas_f
+rm(casas_f)
