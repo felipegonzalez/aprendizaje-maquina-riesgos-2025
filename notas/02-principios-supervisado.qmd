@@ -479,7 +479,7 @@ irreducible). Pero la razón por la que ese error reducible es grande es diferen
 caso. 
 
 Si consideramos pérdida cuadrática, podemos calcular la pérdida promedio condicional a $\mathbf{x}$
-promediando sobre la condicional $\mathbf{y}|\mathbf{x} $:
+promediando sobre la condicional de $\mathbf{y}$ dada $\mathbf{x}$:
 
 $$Err(\hat{f_{\mathcal{L}}}(\mathbf{x})) = E[(\mathbf{y} - \hat{f_{\mathcal{L}}}(\mathbf{x}))^2] = (f^* (\mathbf{x}) - \hat{f_{\mathcal{L}}}(\mathbf{x}))^2 + E[(\mathbf{y}- f^*(\mathbf{x}))^2]$$
 Que reescribimos como:
@@ -590,7 +590,7 @@ Signos típicos de sobreajuste son:
 error de entrenamiento es aceptable, el error de prueba es demasiado alto.
 2. Los valores de $\hat{f}_{\mathcal L}(\mathbf{x})$ dependen fuertemente de los
 valores individuales observados en la muestra de entrenamiento $\mathcal{L}$ (lo cual idealmente no debería
-suceder, pues predicciones buenas no deben cambiar dependiendo de la muestra de entrenamiento).
+suceder, pues predicciones buenas no deberían cambiar mucho dependiendo de la muestra de entrenamiento).
 3. Nuestro proceso $\mathcal{L}\to \hat{f}_{\mathcal L}$ generalmente tiene un exceso
 de capacidad que permite al modelo aprender ruido en el conjunto de entrenamiento.
 4. El tamaño de muestra de entrenamiento es relativamente chico (en relación con 
@@ -603,7 +603,8 @@ Por otro lado, cuando existe subajuste,
 ambos son altos.
 2. Los valores de $\hat{f}_{\mathcal L}(\mathbf{x})$ son menos dependiendientes de 
 los valores individuales observados en la muestra de entrenamiento $\mathcal{L}$ (pues el
-modelo está cerca de saturar su capacidad, y no muy lejano a $f_{\lim}$).
+modelo está cerca de saturar su capacidad, y no muy lejano a lo que obtendríamos con 
+una muestra muy grande).
 3. El proceso $\mathcal{L}\to \hat{f}_{\mathcal L}$ tiene poca capacidad, y no puede aprender
 patrones claros y estables en los datos.
 4. El tamaño de muestra de entrenamiento es relativamente grande (en relación con la
@@ -735,7 +736,72 @@ Generalmente 2 y 3 están en contraposición, a lo que muchas veces se le llama
 reduciendo tanto sesgo como variabilidad.
 :::
 
+## Muestras de validación y sobreajuste de prueba
 
+Cuando probamos muchos métodos distintos, o varios profesionales intentan
+obtener buenas calificaciones en un conjunto de prueba, puede ser que 
+aparezca **sobreajuste al conjunto de prueba**. Una manera de ver esto es
+que cuando hacemos una gran cantidad de intentos, y buscamos el mínimo error
+de prueba, es probable que los ganadores no generalizen tan bien a datos nuevos fuera
+de este conjunto de prueba, o dicho de otra forma, estamos de alguna manera
+usando los datos de prueba para entrenar. Adicionalmente, los métodos que utilizamos
+muchas veces tienen *hiperparámetros* que hay que afinar, lo que implica tener
+que hacer varias pruebas con datos fuera de los datos de entrenamiento (por ejemplo,
+un número apropiado de vecinos cercanos). Esto puede invalidar la estimación de error de prueba.
+
+La solución para prevenir este sobreajuste es introducir una muestra de
+prueba adicional que llamamos **muestra de validación**. Por ejemplo,
+para un problema donde tenemos datos abundantes, podriamos dividir nuestros datos
+de la siguiente manera:
+
+![](./figuras/div_muestra.png)
+
+
+La razón de este proceso es que así podemos ir y venir entre
+entrenamiento y validación, buscando mejores enfoques y modelos, y
+no ponemos en riesgo la estimación final del error, o evaluación de calibración
+de intervalos o probabilidades. Por ejemplo,
+podemos dividir la muestra en 50-25-25 por ciento. Ajustamos modelos
+con el primer 50\%, evaluamos y seleccionamos con el segundo 25\% y finalmente,
+si es necesario, evaluamos el modelo final seleccionado con la muestra 
+final de 25\%. 
+
+El siguiente resumen explica las propiedades que requerimos en los distintos
+tipos de meustra:
+
+::: callout-note
+# Propiedades de entrenamiento-validación-prueba
+
+- No hay una regla general para decidir el tamaño del **conjunto de entrenamiento**. Generalmente
+conjuntos de datos más grandes y seleccionados apropiadamente dan mejores resultados.
+- Los conjuntos de validación y prueba deben ser preferentemente muestras aleatorias
+de las poblaciones para las que queremos hacer predicciones, para tener una estimación
+razonable (no sesgada por ejemplo) del desempeño futuro de nuestro modelo.
+- En cuanto a tamaño, en validación y prueba requerimos que sean de tamaño **absoluto** suficiente para tener
+una estimación con precisión suficientemente buena
+del error y del desempeño predictivo general de nuestros
+modelos (en el proceso de selección, con el conjunto de validación, y en la evaluación final,
+con el conjunto de prueba). 
+- En validación y prueba, estamos haciendo una pregunta de *inferencia*: ¿de qué tamaño y bajo
+que diseño debe ser
+extraida la muestra de validación y prueba?
+::: 
+
+
+Nótese que en validación y prueba es donde la estadística es importante. 
+
+Por ejemplo: supongamos que hacemos un modelo para predecir impago. Quizá nuestro conjunto
+de entrenamiento tiene pocas personas de cierta región del país. Esto no quiere decir
+que no podamos aplicar nuestros métodos, siempre y cuando nuestra muesra de validación/prueba
+tenga suficientes ejemplos para asegurarnos de que nuestro desempeño no es malo en esas
+regiones (y por tanto produce resultados indeseables en la toma de decisiones).
+
+Para decidir de antemano los tamaños de validación y prueba, tenemos que tener una idea
+de qué tanto varía el error de caso a caso (la varianza), si queremos hacer estimaciones
+en subgrupos de datos (que requerirán tamaño de muestra suficiente también), y cuánto
+es aceptable como error de estimación del desempeño predictivo, que generalmente no queremos
+que sea más del 25%, por ejemplo. **En caso de usar muestras relativamente chicas de validación
+o prueba, es necesario estimar el error de estimación del desempeño**.
 
 
 ## Resolver problemas con aprendizaje automático

@@ -9,6 +9,7 @@ scale_colour_discrete <- function(...) {
 }
 ```
 
+
 De la discusión de la sección anterior, y examinando el método de $k$ vecinos
 más cercanos, puede dar la impresión de que si tenemos *suficientes datos*,
 métodos locales como $k$ vecinos pueden ser superiores a otros métodos más estructurados
@@ -24,9 +25,9 @@ métodos locales simples como $k$-vecinos más cercanos rara vez funcionan aprop
 Primero examinamos cómo controlamos el nivel de complejidad para un método
 local como $k$ vecinos más cercanos. La idea es que:
 
-- **Más complejidad**: Si tomamos $k$ demasiado chica, cada estimación usa pocos datos y puede ser ruidosa
+- **Más complejidad**: Si tomamos $k$  chica, cada estimación usa pocos datos y puede ser ruidosa
 (incurrimos en variabilidad). Sin embargo, el predictor resultante puede ajustarse a patrones locales y globales.
-- **Menos complejidad**: Si tomamos $k$ demasiado grande, cada estimación usa potencialmente datos no relevantes muy
+- **Menos complejidad**: Si tomamos $k$ grande, cada estimación usa potencialmente datos no relevantes muy
 lejanos a donde queremos predecir (incurrimos en sesgo), sin embargo cada estimación es más estable pues utiliza más datos.
 
 Comenzamos con un ejemplo simple en dimensión baja:
@@ -94,9 +95,8 @@ mis_metricas <- metric_set(rmse)
 
 
 En la siguiente gráfica mostramos cómo cambia el error de los
-las predicciones sobre la muestra de prueba separada de la de
-entrenamiento. En este caso le llamaremos *muestra de validación* porque
-más adelante veremos que puede ser conveniente dividir en entrenamiento-validación-prueba en lugar de usar sólo 2 particiones:
+las predicciones sobre la muestra de validación separada de la de
+entrenamiento. 
 
 ```{r, fig.width=4, fig.height=3}
 r_split <- manual_rset(list(datos_split), "validación")
@@ -113,7 +113,8 @@ ggplot(vecinos_ajustes_tbl, aes(x = neighbors, y = .estimate)) +
 ```
 
 Donde obtenemos más o menos lo que esperaríamos: modelos con muy pocos vecinos
-o demasiados vecinos se desempeñan relativamente mal. 
+o demasiados vecinos se desempeñan relativamente mal (¿Por qué? Explica para distintos
+valores de $k$ que tipo de error domina, el sesgo o la varianza).
 
 Seleccionaremos el mejor modelo según el error estimado de predicción y
 visualizamos primero 
@@ -157,12 +158,8 @@ típicamente no existen vecinos cercanos, aún para conjuntos de entrenamiento m
 
 Esto implica que para tamaños típicos $n$ de muestra de entrenamiento:
 
-- Si tomamos $k$ chica, el sesgo por especificación es chico (muestras muy grandes), pero el sesgo de estimación puede ser *grande* pues estamos de todas formas obligados a buscar vecinos lejos de donde queremos predecir. La variabilidad también es alta pues usamos pocos datos para cada predicción.
-
-- Si tomamos $k$ más grande, 
-el sesgo por especificación tiende ser más grande (pues promediamos sobre regiones relativamente grandes). Perdemos la supuesta ventaja del método local, 
-aún cuando quizá reduzcamos el sesgo de estimación.
-
+- Si tomamos $k$ más grande, el sesgo es grande.
+- Si tomamos $k$ chica, el sesgo puede ser *grande* pues estamos de todas formas obligados a buscar vecinos lejos de donde queremos predecir. La variabilidad también es alta pues usamos pocos datos para cada predicción.
 - Para que una $k$ chica tenga sesgo de estimación bajo, el tamaño $n$
 de la muestra
 de entrenamiento tiene que ser gigantesca.
@@ -327,6 +324,8 @@ entonces regresión lineal explota la estructura para hacer *pooling*
 de toda la información para construir predicción con sesgo y varianza bajas.
 En contraste, vecinos más cercanos sufre de varianza alta.
 
+## Estructura en métodos de predicción
+
 ::: callout-note
 # Métodos locales sin estructura
 Los métodos locales muchas veces no funcionan bien en dimensión alta. La razón es 
@@ -343,11 +342,19 @@ logran explotar información de puntos que no están tan cerca del lugar donde q
 :::
 
 Muchas veces el éxito en la predicción depende de establecer esas estructuras 
-apropiadas ya sea mediante:
+apropiadas ya sea mediante *estructura apropiada*:
 
-- **Estructura** en nuestros modelos (por ejemplo, efectos lineales cuando variables tienen efectos aproximadamente
-lineales, árboles cuando hay algunas interacciones, redes convolucionales
-para procesamiento de imágenes y señales, dependencia del contexto en modelos
-de lenguaje, etc.)
-- **Reducción de dimensionalidad** apropiada (por ejemplo, 
-*embeddings* basados en otros modelos, o técnicas como componentes principales/descompocisión en valores singulares, etc.).
+1. Efectos lineales cuando variables tienen efectos aproximadamente lineales.
+2. Predictores basados en árboles cuando las interacciones entre variables son importantes.
+3. Redes neuronales convolucionales para procesamiento de imágenes y señales.
+4. Redes neuronales para lenguaje que toman el contexto corto y más largo de las palabras que aparecen en un texto.
+
+Esto incluye también un procesamiento adecuado de los datos crudos que utilizamos para 
+hacer predicciones, por ejemplo:
+
+1. Transformaciones de variables apropiadas (por ejemplo, logaritmos, splines, procesamiento de variables categóricas, etc.).
+2. Selección de variables relevantes para el problema. 
+3. Reducción de dimensionalidad (por ejemplo, 
+*embeddings* basados en otros modelos, o técnicas como componentes principales/descomposición en valores singulares, etc.).
+4. Procesamiento apropiado de estructuras complejas de datos (por ejemplo, cuando cada unidad tiene varias mediciones en el tiempo).
+
