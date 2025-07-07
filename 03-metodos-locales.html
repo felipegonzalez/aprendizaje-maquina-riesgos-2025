@@ -205,6 +205,7 @@ window.Quarto = {
   <li><a href="#controlando-complejidad" id="toc-controlando-complejidad" class="nav-link active" data-scroll-target="#controlando-complejidad"><span class="header-section-number">3.1</span> Controlando complejidad</a></li>
   <li><a href="#la-maldición-de-la-dimensionalidad" id="toc-la-maldición-de-la-dimensionalidad" class="nav-link" data-scroll-target="#la-maldición-de-la-dimensionalidad"><span class="header-section-number">3.2</span> La maldición de la dimensionalidad</a></li>
   <li><a href="#regresión-lineal-en-dimensión-alta" id="toc-regresión-lineal-en-dimensión-alta" class="nav-link" data-scroll-target="#regresión-lineal-en-dimensión-alta"><span class="header-section-number">3.3</span> Regresión lineal en dimensión alta</a></li>
+  <li><a href="#estructura-en-métodos-de-predicción" id="toc-estructura-en-métodos-de-predicción" class="nav-link" data-scroll-target="#estructura-en-métodos-de-predicción"><span class="header-section-number">3.4</span> Estructura en métodos de predicción</a></li>
   </ul>
 </nav>
     </div>
@@ -236,8 +237,8 @@ window.Quarto = {
 <h2 data-number="3.1" class="anchored" data-anchor-id="controlando-complejidad"><span class="header-section-number">3.1</span> Controlando complejidad</h2>
 <p>Primero examinamos cómo controlamos el nivel de complejidad para un método local como <span class="math inline">\(k\)</span> vecinos más cercanos. La idea es que:</p>
 <ul>
-<li><strong>Más complejidad</strong>: Si tomamos <span class="math inline">\(k\)</span> demasiado chica, cada estimación usa pocos datos y puede ser ruidosa (incurrimos en variabilidad). Sin embargo, el predictor resultante puede ajustarse a patrones locales y globales.</li>
-<li><strong>Menos complejidad</strong>: Si tomamos <span class="math inline">\(k\)</span> demasiado grande, cada estimación usa potencialmente datos no relevantes muy lejanos a donde queremos predecir (incurrimos en sesgo), sin embargo cada estimación es más estable pues utiliza más datos.</li>
+<li><strong>Más complejidad</strong>: Si tomamos <span class="math inline">\(k\)</span> chica, cada estimación usa pocos datos y puede ser ruidosa (incurrimos en variabilidad). Sin embargo, el predictor resultante puede ajustarse a patrones locales y globales.</li>
+<li><strong>Menos complejidad</strong>: Si tomamos <span class="math inline">\(k\)</span> grande, cada estimación usa potencialmente datos no relevantes muy lejanos a donde queremos predecir (incurrimos en sesgo), sin embargo cada estimación es más estable pues utiliza más datos.</li>
 </ul>
 <p>Comenzamos con un ejemplo simple en dimensión baja:</p>
 <section id="ejemplo" class="level4 unnumbered">
@@ -304,7 +305,7 @@ window.Quarto = {
 <span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>vecinos_grid <span class="ot">&lt;-</span> <span class="fu">grid_regular</span>(vecinos_params, <span class="at">levels =</span> <span class="dv">100</span>)</span>
 <span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>mis_metricas <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(rmse)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>En la siguiente gráfica mostramos cómo cambia el error de los las predicciones sobre la muestra de prueba separada de la de entrenamiento. En este caso le llamaremos <em>muestra de validación</em> porque más adelante veremos que puede ser conveniente dividir en entrenamiento-validación-prueba en lugar de usar sólo 2 particiones:</p>
+<p>En la siguiente gráfica mostramos cómo cambia el error de los las predicciones sobre la muestra de validación separada de la de entrenamiento.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>r_split <span class="ot">&lt;-</span> <span class="fu">manual_rset</span>(<span class="fu">list</span>(datos_split), <span class="st">"validación"</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>vecinos_eval_tbl <span class="ot">&lt;-</span> <span class="fu">tune_grid</span>(flujo_vecinos,</span>
@@ -325,7 +326,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>Donde obtenemos más o menos lo que esperaríamos: modelos con muy pocos vecinos o demasiados vecinos se desempeñan relativamente mal.</p>
+<p>Donde obtenemos más o menos lo que esperaríamos: modelos con muy pocos vecinos o demasiados vecinos se desempeñan relativamente mal (¿Por qué? Explica para distintos valores de <span class="math inline">\(k\)</span> que tipo de error domina, el sesgo o la varianza).</p>
 <p>Seleccionaremos el mejor modelo según el error estimado de predicción y visualizamos primero nuestras predicciones y los datos de entrenamiento de la siguiente forma:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mejor_rmse <span class="ot">&lt;-</span> <span class="fu">select_best</span>(vecinos_eval_tbl, <span class="at">metric =</span> <span class="st">"rmse"</span>)</span>
@@ -371,9 +372,9 @@ Maldición de la dimensionalidad
 </div>
 <p>Esto implica que para tamaños típicos <span class="math inline">\(n\)</span> de muestra de entrenamiento:</p>
 <ul>
-<li><p>Si tomamos <span class="math inline">\(k\)</span> chica, el sesgo por especificación es chico (muestras muy grandes), pero el sesgo de estimación puede ser <em>grande</em> pues estamos de todas formas obligados a buscar vecinos lejos de donde queremos predecir. La variabilidad también es alta pues usamos pocos datos para cada predicción.</p></li>
-<li><p>Si tomamos <span class="math inline">\(k\)</span> más grande, el sesgo por especificación tiende ser más grande (pues promediamos sobre regiones relativamente grandes). Perdemos la supuesta ventaja del método local, aún cuando quizá reduzcamos el sesgo de estimación.</p></li>
-<li><p>Para que una <span class="math inline">\(k\)</span> chica tenga sesgo de estimación bajo, el tamaño <span class="math inline">\(n\)</span> de la muestra de entrenamiento tiene que ser gigantesca.</p></li>
+<li>Si tomamos <span class="math inline">\(k\)</span> más grande, el sesgo es grande.</li>
+<li>Si tomamos <span class="math inline">\(k\)</span> chica, el sesgo puede ser <em>grande</em> pues estamos de todas formas obligados a buscar vecinos lejos de donde queremos predecir. La variabilidad también es alta pues usamos pocos datos para cada predicción.</li>
+<li>Para que una <span class="math inline">\(k\)</span> chica tenga sesgo de estimación bajo, el tamaño <span class="math inline">\(n\)</span> de la muestra de entrenamiento tiene que ser gigantesca.</li>
 </ul>
 <section id="ejemplo-1" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="ejemplo-1">Ejemplo</h4>
@@ -1014,6 +1015,9 @@ Maldición de la dimensionalidad
 </div>
 </div>
 <p>Lo que sucede más específicamente es que en regresión lineal utilizamos <em>todos</em> los datos para hacer nuestra estimación en cada predicción. Si la estructura del problema es aproximadamente lineal, entonces regresión lineal explota la estructura para hacer <em>pooling</em> de toda la información para construir predicción con sesgo y varianza bajas. En contraste, vecinos más cercanos sufre de varianza alta.</p>
+</section>
+<section id="estructura-en-métodos-de-predicción" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="estructura-en-métodos-de-predicción"><span class="header-section-number">3.4</span> Estructura en métodos de predicción</h2>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1032,11 +1036,20 @@ Métodos locales sin estructura
 <p>Métodos con más estructura global, apropiada para el problema, logran explotar información de puntos que no están tan cerca del lugar donde queremos predecir.</p>
 </div>
 </div>
-<p>Muchas veces el éxito en la predicción depende de establecer esas estructuras apropiadas ya sea mediante:</p>
-<ul>
-<li><strong>Estructura</strong> en nuestros modelos (por ejemplo, efectos lineales cuando variables tienen efectos aproximadamente lineales, árboles cuando hay algunas interacciones, redes convolucionales para procesamiento de imágenes y señales, dependencia del contexto en modelos de lenguaje, etc.)</li>
-<li><strong>Reducción de dimensionalidad</strong> apropiada (por ejemplo, <em>embeddings</em> basados en otros modelos, o técnicas como componentes principales/descompocisión en valores singulares, etc.).</li>
-</ul>
+<p>Muchas veces el éxito en la predicción depende de establecer esas estructuras apropiadas ya sea mediante <em>estructura apropiada</em>:</p>
+<ol type="1">
+<li>Efectos lineales cuando variables tienen efectos aproximadamente lineales.</li>
+<li>Predictores basados en árboles cuando las interacciones entre variables son importantes.</li>
+<li>Redes neuronales convolucionales para procesamiento de imágenes y señales.</li>
+<li>Redes neuronales para lenguaje que toman el contexto corto y más largo de las palabras que aparecen en un texto.</li>
+</ol>
+<p>Esto incluye también un procesamiento adecuado de los datos crudos que utilizamos para hacer predicciones, por ejemplo:</p>
+<ol type="1">
+<li>Transformaciones de variables apropiadas (por ejemplo, logaritmos, splines, procesamiento de variables categóricas, etc.).</li>
+<li>Selección de variables relevantes para el problema.</li>
+<li>Reducción de dimensionalidad (por ejemplo, <em>embeddings</em> basados en otros modelos, o técnicas como componentes principales/descomposición en valores singulares, etc.).</li>
+<li>Procesamiento apropiado de estructuras complejas de datos (por ejemplo, cuando cada unidad tiene varias mediciones en el tiempo).</li>
+</ol>
 
 
 </section>
