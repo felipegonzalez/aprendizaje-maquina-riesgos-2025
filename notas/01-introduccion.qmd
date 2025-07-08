@@ -21,6 +21,8 @@ Las tareas más apropiadas para este enfoque, en general, son aquellas en donde:
 -   El costo por errores al ejecutar la tarea es relativamente bajo (al menos comparado con alternativas).
 -   La tarea se repite de manera más o menos homogénea una cantidad grande de veces.
 
+
+
 Aunque es posible extender lo que veremos a contextos más generales, cuando uno de los tres anteriores requisitos no se cumple es mejor usar o complementar con otros enfoques.
 
 #### Ejemplos de tareas de aprendizaje: {.unnumbered}
@@ -42,6 +44,11 @@ Es posible aproximarse a todos estos problemas usando reglas (por ejemplo, si lo
 
 -   Cuando conjuntos de reglas creadas a mano se desempeñan mal (por ejemplo, para otorgar créditos, reconocer caracteres, etc.)
 -   Reglas creadas a mano pueden ser difíciles de mantener (por ejemplo, un corrector ortográfico), pues para problemas interesantes muchas veces se requieren grandes cantidades de reglas. Por ejemplo: ¿qué búsquedas www se enfocan en dar direcciones como resultados? ¿cómo filtrar comentarios no aceptables en foros?
+-  Finalmente, notamos que en estos problemas nuestro interés principal **no** es
+entender qué variables influyen en otras (en el proceso natural o de negocio). Sin más
+teoría o diseño de datos, los métodos que utilizaremos explotan patrones en los datos
+que no necesariamente explican cómo funcionan los sistemas de interés.
+
 
 ## Ejemplo: reglas y aprendizaje
 
@@ -230,7 +237,7 @@ De forma que podemos resolver este problema con algoritmos generales, sin tener 
 
 ## Ejemplo: mediciones costosas {#sec-medicioncostosa}
 
-En algunos casos, el estándar de la medición que nos interesa es uno que es costoso de cumplir: a veces se dice que *etiquetar* los datos es costoso. Un ejemplo es producir las estimaciones de ingreso trimestral de un hogar que se recolecta en la ENIGH (ver [aquí](https://www.inegi.org.mx/programas/enigh/nc/2018/)). En este caso particular, se utiliza esta encuesta como datos etiquetados para poder estimar el ingreso de otros hogares que no están en la muestra del ENIGH, pero para los que se conocen características de las vivienda, características de los integrantes, y otras medidas que son más fácilmente recolectadas en encuestas de opinión.
+En algunos casos, el estándar de la medición que nos interesa es uno que es costoso de cumplir: a veces se dice que *etiquetar* los datos es costoso. Un ejemplo es producir las estimaciones de ingreso trimestral de un hogar que se recolecta en la ENIGH (ver [aquí](https://www.inegi.org.mx/programas/enigh/nc/2022/)). En este caso particular, se utiliza esta encuesta como datos etiquetados para poder estimar el ingreso de otros hogares que no están en la muestra del ENIGH, pero para los que se conocen características de las vivienda, características de los integrantes, y otras medidas que son más fácilmente recolectadas en encuestas de opinión.
 
 Veremos otro ejemplo: estimar el valor de mercado de las casas en venta de una región. Es posible que tengamos un inventario de casas con varias de sus características registradas, pero producir estimaciones correctas de su valor de mercado puede requerir de inspecciones costosas de expertos, o tomar aproximaciones imprecisas de esta cantidad (por ejemplo, cuál es el precio ofertado).
 
