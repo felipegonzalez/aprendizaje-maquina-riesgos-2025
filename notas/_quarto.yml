@@ -9,6 +9,8 @@ book:
     - 01-introduccion.qmd
     - 02-principios-supervisado.qmd
     - 03-metodos-locales.qmd
+    - 04-lineales-ingenieria.qmd
+    - 05-regularizacion-1.qmd
 
 bibliography: referencias/book.bib
 

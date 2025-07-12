@@ -342,7 +342,7 @@ logran explotar información de puntos que no están tan cerca del lugar donde q
 :::
 
 Muchas veces el éxito en la predicción depende de establecer esas estructuras 
-apropiadas ya sea mediante *estructura apropiada*:
+apropiadas mediante *estructura apropiada*, por ejemplo:
 
 1. Efectos lineales cuando variables tienen efectos aproximadamente lineales.
 2. Predictores basados en árboles cuando las interacciones entre variables son importantes.

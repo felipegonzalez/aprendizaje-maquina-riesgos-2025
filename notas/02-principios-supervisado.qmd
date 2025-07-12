@@ -803,6 +803,21 @@ es aceptable como error de estimación del desempeño predictivo, que generalmen
 que sea más del 25%, por ejemplo. **En caso de usar muestras relativamente chicas de validación
 o prueba, es necesario estimar el error de estimación del desempeño**.
 
+### Uso de las predicciones y validación y prueba
+
+Como explicamos, muchas veces tenemos que construir, con datos disponibles, separaciones de los datos en conjuntos de entrenamiento, validación y prueba. Para definir correctamente estos conjuntos, **lo primero tenemos que preguntarnos es cómo se van a utilizar las predicciones una vez que pongamos en producción el modelo**. Una pregunta
+útil que podemos hacer al principio es:
+
+- ¿Cuál es la unidad de predicción? ¿Para qué tipo de unidades vamos
+a hacer predicciones al poner en producción el modelo?
+
+Por ejemplo, en el caso de ingresos de hogares, los datos disponibles provienen de una muestra por conglomerados. Normalmente queremos hacer predicciones para hogares que no están en esos conglomerados. Es más apropiado separar conglomerados completos en entrenamiento, validación y prueba, de forma que no tengamos hogares de un mismo conglomerado en más de un conjunto. La respuesta es "las unidades son hogares, que están en general fuera de conglomerados observados en la muestra"
+
+Por otro lado, para un sistema de recomendación queremos hacer predicciones para usuarios que tienen datos. En este caso, no queremos poner usuarios distintos en distintos conjuntos, sino que queremos separar los los datos de un usuario en una parte de entrenamiento y otra de prueba (por ejemplo cronológicamente). La respuesta es: "la unidad de predicción es usuario-artículo, y queremos hacer predicciones para pares usuario-artículo tales tenemos cierta cantidad mínima de observaciones para el usuario correspondiente".
+
+
+
+
 
 ## Resolver problemas con aprendizaje automático
 
