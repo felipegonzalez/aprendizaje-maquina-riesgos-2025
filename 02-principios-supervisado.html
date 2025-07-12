@@ -74,7 +74,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-ef287fb3fa59eca9e4fa3fcef72acd86.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-0d2e813c3c20faa5ebb016313fc9dd20.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -193,6 +193,18 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Estructura en modelos y métodos locales</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-lineales-ingenieria.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Métodos lineales e ingenería de entradas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-regularizacion-1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Regularización y variabilidad</span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -224,7 +236,10 @@ window.Quarto = {
   <li><a href="#agregando-más-información-y-error-irreducible" id="toc-agregando-más-información-y-error-irreducible" class="nav-link" data-scroll-target="#agregando-más-información-y-error-irreducible"><span class="header-section-number">2.7</span> Agregando más información y error irreducible</a></li>
   <li><a href="#acerca-de-la-estimación-del-error-de-predicción" id="toc-acerca-de-la-estimación-del-error-de-predicción" class="nav-link" data-scroll-target="#acerca-de-la-estimación-del-error-de-predicción"><span class="header-section-number">2.8</span> Acerca de la estimación del error de predicción</a></li>
   <li><a href="#resumen" id="toc-resumen" class="nav-link" data-scroll-target="#resumen"><span class="header-section-number">2.9</span> Resumen</a></li>
-  <li><a href="#muestras-de-validación-y-sobreajuste-de-prueba" id="toc-muestras-de-validación-y-sobreajuste-de-prueba" class="nav-link" data-scroll-target="#muestras-de-validación-y-sobreajuste-de-prueba"><span class="header-section-number">2.10</span> Muestras de validación y sobreajuste de prueba</a></li>
+  <li><a href="#muestras-de-validación-y-sobreajuste-de-prueba" id="toc-muestras-de-validación-y-sobreajuste-de-prueba" class="nav-link" data-scroll-target="#muestras-de-validación-y-sobreajuste-de-prueba"><span class="header-section-number">2.10</span> Muestras de validación y sobreajuste de prueba</a>
+  <ul class="collapse">
+  <li><a href="#uso-de-las-predicciones-y-validación-y-prueba" id="toc-uso-de-las-predicciones-y-validación-y-prueba" class="nav-link" data-scroll-target="#uso-de-las-predicciones-y-validación-y-prueba"><span class="header-section-number">2.10.1</span> Uso de las predicciones y validación y prueba</a></li>
+  </ul></li>
   <li><a href="#resolver-problemas-con-aprendizaje-automático" id="toc-resolver-problemas-con-aprendizaje-automático" class="nav-link" data-scroll-target="#resolver-problemas-con-aprendizaje-automático"><span class="header-section-number">2.11</span> Resolver problemas con aprendizaje automático</a></li>
   </ul>
 </nav>
@@ -3657,6 +3672,15 @@ Propiedades de entrenamiento-validación-prueba
 <p>Nótese que en validación y prueba es donde la estadística es importante.</p>
 <p>Por ejemplo: supongamos que hacemos un modelo para predecir impago. Quizá nuestro conjunto de entrenamiento tiene pocas personas de cierta región del país. Esto no quiere decir que no podamos aplicar nuestros métodos, siempre y cuando nuestra muesra de validación/prueba tenga suficientes ejemplos para asegurarnos de que nuestro desempeño no es malo en esas regiones (y por tanto produce resultados indeseables en la toma de decisiones).</p>
 <p>Para decidir de antemano los tamaños de validación y prueba, tenemos que tener una idea de qué tanto varía el error de caso a caso (la varianza), si queremos hacer estimaciones en subgrupos de datos (que requerirán tamaño de muestra suficiente también), y cuánto es aceptable como error de estimación del desempeño predictivo, que generalmente no queremos que sea más del 25%, por ejemplo. <strong>En caso de usar muestras relativamente chicas de validación o prueba, es necesario estimar el error de estimación del desempeño</strong>.</p>
+<section id="uso-de-las-predicciones-y-validación-y-prueba" class="level3" data-number="2.10.1">
+<h3 data-number="2.10.1" class="anchored" data-anchor-id="uso-de-las-predicciones-y-validación-y-prueba"><span class="header-section-number">2.10.1</span> Uso de las predicciones y validación y prueba</h3>
+<p>Como explicamos, muchas veces tenemos que construir, con datos disponibles, separaciones de los datos en conjuntos de entrenamiento, validación y prueba. Para definir correctamente estos conjuntos, <strong>lo primero tenemos que preguntarnos es cómo se van a utilizar las predicciones una vez que pongamos en producción el modelo</strong>. Una pregunta útil que podemos hacer al principio es:</p>
+<ul>
+<li>¿Cuál es la unidad de predicción? ¿Para qué tipo de unidades vamos a hacer predicciones al poner en producción el modelo?</li>
+</ul>
+<p>Por ejemplo, en el caso de ingresos de hogares, los datos disponibles provienen de una muestra por conglomerados. Normalmente queremos hacer predicciones para hogares que no están en esos conglomerados. Es más apropiado separar conglomerados completos en entrenamiento, validación y prueba, de forma que no tengamos hogares de un mismo conglomerado en más de un conjunto. La respuesta es “las unidades son hogares, que están en general fuera de conglomerados observados en la muestra”</p>
+<p>Por otro lado, para un sistema de recomendación queremos hacer predicciones para usuarios que tienen datos. En este caso, no queremos poner usuarios distintos en distintos conjuntos, sino que queremos separar los los datos de un usuario en una parte de entrenamiento y otra de prueba (por ejemplo cronológicamente). La respuesta es: “la unidad de predicción es usuario-artículo, y queremos hacer predicciones para pares usuario-artículo tales tenemos cierta cantidad mínima de observaciones para el usuario correspondiente”.</p>
+</section>
 </section>
 <section id="resolver-problemas-con-aprendizaje-automático" class="level2" data-number="2.11">
 <h2 data-number="2.11" class="anchored" data-anchor-id="resolver-problemas-con-aprendizaje-automático"><span class="header-section-number">2.11</span> Resolver problemas con aprendizaje automático</h2>
