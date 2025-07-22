@@ -84,6 +84,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./81-apendice-descenso.html" rel="next">
 <link href="./04-lineales-ingenieria.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -224,6 +225,35 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Regularización y variabilidad</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./81-apendice-descenso.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Apéndice 1: descenso en gradiente</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./82-apendice-descenso-estocastico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Apéndice 2: Descenso estocástico</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./99-referencias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referencias</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -1021,7 +1051,7 @@ Regularización L2
 </section>
 <section id="ejemplo-2-penalización-y-estimaciones-ruidosas" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="ejemplo-2-penalización-y-estimaciones-ruidosas"><span class="header-section-number">5.3</span> Ejemplo 2: penalización y estimaciones ruidosas</h2>
-<p>Consideremos los siguientes datos clásicos de Radiación Solar, Temperatura, Velocidad del Viento y Ozono para distintos días en Nueva York (<span class="citation" data-cites="chambers83">Chambers et&nbsp;al. (<a href="#ref-chambers83" role="doc-biblioref">1983</a>)</span>):</p>
+<p>Consideremos los siguientes datos clásicos de Radiación Solar, Temperatura, Velocidad del Viento y Ozono para distintos días en Nueva York (<span class="citation" data-cites="chambers83">Chambers et&nbsp;al. (<a href="99-referencias.html#ref-chambers83" role="doc-biblioref">1983</a>)</span>):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>air_data <span class="ot">&lt;-</span> airquality <span class="sc">|&gt;</span> </span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Wind_cat =</span> <span class="fu">cut</span>(Wind, <span class="fu">quantile</span>(Wind, <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.33</span>, <span class="fl">0.66</span>, <span class="dv">1</span>)), </span>
@@ -1951,7 +1981,7 @@ muslo   0.88    0.81   0.75  1.00</code></pre>
 </div>
 <p>Y nótese que este modelo solo incluye 3 variables.La traza confirma que la regularización lasso, además de encoger coeficientes, saca variables del modelo conforme el valor de regularización aumenta.</p>
 <p>La razón de esta diferencia cualitativa entre cómo funciona lasso y ridge se puede entender considerando que los problemas de penalización mostrados arriba puede escribirse en forma de problemas de restricción. Por ejemplo, lasso se puede reescribir como el problema de resolver</p>
-<p><span class="math display">\[\min_a D(\beta)\]</span> sujeto a <span class="math display">\[\sum_{i=1}^p |\beta_j| &lt; t\]</span> En la gráfica siguiente (tomada de <span class="citation" data-cites="ESL">Hastie, Tibshirani, y Friedman (<a href="#ref-ESL" role="doc-biblioref">2017</a>)</span>), lasso está a la izquierda y ridge está a la derecha, las curvas rojas son curvas de nivel de la suma de cuadrados <span class="math inline">\(D(a)\)</span>, y <span class="math inline">\(\hat{\beta}\)</span> es el estimador usual de mínimos cuadrados de los coeficientes (sin penalizar). En azul está la restricción:</p>
+<p><span class="math display">\[\min_a D(\beta)\]</span> sujeto a <span class="math display">\[\sum_{i=1}^p |\beta_j| &lt; t\]</span> En la gráfica siguiente (tomada de <span class="citation" data-cites="ESL">Hastie, Tibshirani, y Friedman (<a href="99-referencias.html#ref-ESL" role="doc-biblioref">2017</a>)</span>), lasso está a la izquierda y ridge está a la derecha, las curvas rojas son curvas de nivel de la suma de cuadrados <span class="math inline">\(D(a)\)</span>, y <span class="math inline">\(\hat{\beta}\)</span> es el estimador usual de mínimos cuadrados de los coeficientes (sin penalizar). En azul está la restricción:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="figuras/ridge_lasso.png" class="img-fluid figure-img"></p>
@@ -1989,7 +2019,7 @@ Regularización para modelos lineales
 <h2 data-number="5.7" class="anchored" data-anchor-id="regularización-con-descenso-en-gradiente"><span class="header-section-number">5.7</span> Regularización con descenso en gradiente</h2>
 <p>Descenso en gradiente estocástico es quizá uno de los métodos de ajuste más importantes en el aprendizaje automático moderno, porque al mismo tiempo que da regularización, permite escalar a problemas de optimización grandes, como los que surgen en redes neuronales.</p>
 <p>La idea básica es utilizar un método iterativo que comience con una <span class="math inline">\(f_0\)</span> simple, y luego iterar a una nueva <span class="math inline">\(f_1\)</span> que se adapta mejor a los datos pero no es muy diferente a <span class="math inline">\(f_0\)</span>, utilizando información del gradiente en algunos puntos de entrenamiento. En lugar de seguir iterando hasta llegar a un mínimo de <span class="math inline">\(L(f),\)</span> evaluamos con una muestra de prueba para encontrar un lugar apropiado para detenernos (<em>early stopping</em>). También podemos modificar <span class="math inline">\(L(f)\)</span> en cada paso para evitar atorarnos en un mínimo sobreajustado (como vimos en regularización L2 y L1).</p>
-<p>Una manera de hacer esto es usando el método de descenso estocástico, (ver apéndices <span class="quarto-unresolved-ref">?sec-desc-maximo</span> y <span class="quarto-unresolved-ref">?sec-desc-estocastico</span>) que consiste en:</p>
+<p>Una manera de hacer esto es usando el método de descenso estocástico, (ver apéndices <a href="81-apendice-descenso.html" class="quarto-xref"><span>Apéndice A</span></a> y <a href="82-apendice-descenso-estocastico.html" class="quarto-xref"><span>Apéndice B</span></a>) que consiste en:</p>
 <ul>
 <li>En cada iteración <span class="math inline">\(i\)</span> construimos una función de pérdida <span class="math inline">\(L^{(i)}(f)\)</span> basada solamente en una parte de los datos (<em>batch</em>).</li>
 <li>En cada iteración <span class="math inline">\(i\)</span> hacemos un salto relativamente chico en una dirección de descenso para los parámetros, sin intentar buscar un mínimo local o global. La dirección de descenso está dada por <span class="math inline">\(-\nabla L^{(i)}\)</span>.</li>
@@ -2062,7 +2092,7 @@ Descenso estocástico
 <p>Es crucial escoger un tamaño de paso adecuado para cada problema. Generalmente se considera un parámetro que debe ser afinado, de manera similar al parámetro de regularización L2 que vimos arriba.</p>
 </div>
 </div>
-<p>Finalmente, notamos que este tipo de regularización resulta en comportamientos a veces inesperados del desempeño predictivo en función del tamaño del modelo utilizado, por ejemplo, puede ocurrir el fenómeno de doble descenso (ver <span class="citation" data-cites="ISL">James et&nbsp;al. (<a href="#ref-ISL" role="doc-biblioref">2014</a>)</span>):</p>
+<p>Finalmente, notamos que este tipo de regularización resulta en comportamientos a veces inesperados del desempeño predictivo en función del tamaño del modelo utilizado, por ejemplo, puede ocurrir el fenómeno de doble descenso (ver <span class="citation" data-cites="ISL">James et&nbsp;al. (<a href="99-referencias.html#ref-ISL" role="doc-biblioref">2014</a>)</span>):</p>
 <ol type="1">
 <li>Comenzando en modelos muy simples, al incrementar la complejidad o tamaño del model el error de prueba disminuye.</li>
 <li>A partir de cierto momento, incrementar la complejidad incrementa el error de prueba (como esperaríamos por un aumento en varianza). El mínimo, que puede ser único, da una solución sobreajustada, posiblemente con parámetros “muy grandes”.</li>
@@ -2071,7 +2101,7 @@ Descenso estocástico
 <p>Esto se puede deber, por ejemplo, pues cuando existen pocos grados de libertad, la solución es escencialmente única (del paso 1 a 2 de arriba). Sin embargo, con modelos más grandes aparecen muchas otras soluciones posibles: las mejores en entrenamiento son peores en generalización, pero las que son “regularizadas” por descenso estocástico son mejores en desempeño predictivo. Puedes pensar en un polinomio de grado muy alto: la solución de grado alto que encontramos con descenso estocástico puede ser muy suave, en contraste con lo que encontraríamos si llegáramos a un mínimo global o cercano al global.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-chambers83" class="csl-entry" role="listitem">
 Chambers, J. M., W. S. Cleveland, B. Kleiner, y P. A. Tukey. 1983. <em>Graphical Methods for Data Analysis</em>. Chapman &amp; Hall statistics series. Wadsworth International Group. <a href="https://books.google.com.mx/books?id=I-tQAAAAMAAJ">https://books.google.com.mx/books?id=I-tQAAAAMAAJ</a>.
 </div>
@@ -2509,6 +2539,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./81-apendice-descenso.html" class="pagination-link" aria-label="Apéndice 1: descenso en gradiente">
+        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Apéndice 1: descenso en gradiente</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

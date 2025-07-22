@@ -225,6 +225,35 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Regularización y variabilidad</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./81-apendice-descenso.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Apéndice 1: descenso en gradiente</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./82-apendice-descenso-estocastico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Apéndice 2: Descenso estocástico</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./99-referencias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referencias</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -5631,7 +5660,7 @@ The retained training set is ~ 0.44 Mb  in memory.</code></pre>
 <p><span class="math display">\[f(x) = a + b_1x + b_2x^2 + b_3x^3 + b_4x^4 + \textrm{otros términos}\]</span></p>
 <p>Para hacer esto, sólo tenemos que precalcular <span class="math inline">\(x, x^2, x^3, x^4\)</span> y añadir al modelo lineal.</p>
 <p>En el caso de splines, con 4 grados de libertad por ejemplo, el modelo se convierte en:</p>
-<p><span class="math display">\[f(x) = a + b_1s_1(x) + b_2s_2(x) + b_3s_3(x) + b_4s_4(x) + \textrm{otros términos}\]</span> donde cada <span class="math inline">\(s_i(x)\)</span> es una función cúbica por tramos que vale 0 fuera de un intervalo. Igual que con polinomios, estas variables <span class="math inline">\(s_i(x)\)</span> pueden precalcularse a partir de la <span class="math inline">\(x\)</span> original y los nudos que escogimos. Puedes ver los detalles en nuestra referencia <span class="citation" data-cites="ESL">Hastie, Tibshirani, y Friedman (<a href="#ref-ESL" role="doc-biblioref">2017</a>)</span>.</p>
+<p><span class="math display">\[f(x) = a + b_1s_1(x) + b_2s_2(x) + b_3s_3(x) + b_4s_4(x) + \textrm{otros términos}\]</span> donde cada <span class="math inline">\(s_i(x)\)</span> es una función cúbica por tramos que vale 0 fuera de un intervalo. Igual que con polinomios, estas variables <span class="math inline">\(s_i(x)\)</span> pueden precalcularse a partir de la <span class="math inline">\(x\)</span> original y los nudos que escogimos. Puedes ver los detalles en nuestra referencia <span class="citation" data-cites="ESL">Hastie, Tibshirani, y Friedman (<a href="99-referencias.html#ref-ESL" role="doc-biblioref">2017</a>)</span>.</p>
 <p>La ventaja de utilizar estos splines es que</p>
 <ul>
 <li>Son más estables en el cálculo, pues a lo más utilizan potencias cúbicas.</li>
@@ -6782,7 +6811,7 @@ The retained training set is ~ 0.44 Mb  in memory.</code></pre>
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-ESL" class="csl-entry" role="listitem">
 Hastie, Trevor, Robert Tibshirani, y Jerome Friedman. 2017. <em>The Elements of Statistical Learning</em>. Springer Series en Statistics. Springer New York Inc. <a href="http://web.stanford.edu/~hastie/ElemStatLearn/">http://web.stanford.edu/~hastie/ElemStatLearn/</a>.
 </div>
