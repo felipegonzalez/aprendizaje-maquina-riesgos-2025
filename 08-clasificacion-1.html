@@ -74,7 +74,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-0d2e813c3c20faa5ebb016313fc9dd20.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-cd9543ca25a07a2c96ed871f8cad482b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -227,6 +227,18 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./09-clasificacion-2.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Decisiones de clasificación</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-clasificacion-calibracion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Calibración de probabilidades</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-val-cruzada.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Entrenamiento, Validación y Prueba</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -2729,7 +2741,7 @@ Residual Deviance: 178.4    AIC: 194.4</code></pre>
 <span id="cb45-27"><a href="#cb45-27" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Epoch 1/10
-1/1 - 0s - 266ms/step - binary_crossentropy: 0.6931 - loss: 0.6931
+1/1 - 0s - 252ms/step - binary_crossentropy: 0.6931 - loss: 0.6931
 Epoch 2/10
 1/1 - 0s - 22ms/step - binary_crossentropy: 0.5875 - loss: 0.5875
 Epoch 3/10
@@ -2741,13 +2753,13 @@ Epoch 5/10
 Epoch 6/10
 1/1 - 0s - 22ms/step - binary_crossentropy: 0.4873 - loss: 0.4873
 Epoch 7/10
-1/1 - 0s - 25ms/step - binary_crossentropy: 0.4791 - loss: 0.4791
+1/1 - 0s - 22ms/step - binary_crossentropy: 0.4791 - loss: 0.4791
 Epoch 8/10
-1/1 - 0s - 25ms/step - binary_crossentropy: 0.4728 - loss: 0.4728
+1/1 - 0s - 22ms/step - binary_crossentropy: 0.4728 - loss: 0.4728
 Epoch 9/10
-1/1 - 0s - 27ms/step - binary_crossentropy: 0.4680 - loss: 0.4680
+1/1 - 0s - 22ms/step - binary_crossentropy: 0.4680 - loss: 0.4680
 Epoch 10/10
-1/1 - 0s - 26ms/step - binary_crossentropy: 0.4643 - loss: 0.4643</code></pre>
+1/1 - 0s - 22ms/step - binary_crossentropy: 0.4643 - loss: 0.4643</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(historia)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -2806,7 +2818,7 @@ $loss
 [3,] -0.05472931
 [4,] -0.02247143
 [5,]  0.51263177
-[6,]  0.55927497
+[6,]  0.55927491
 [7,]  0.45200700
 
 [[2]]
@@ -2914,10 +2926,9 @@ Probabilidades de clase y pérdida 0-1
 Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/train-images-idx3-ubyte.gz
 
 [1m       0/26421880[0m [37m━━━━━━━━━━━━━━━━━━━━[0m [1m0s[0m 0s/step
-[1m 3727360/26421880[0m [32m━━[0m[37m━━━━━━━━━━━━━━━━━━[0m [1m0s[0m 0us/step
-[1m11034624/26421880[0m [32m━━━━━━━━[0m[37m━━━━━━━━━━━━[0m [1m0s[0m 0us/step
-[1m17448960/26421880[0m [32m━━━━━━━━━━━━━[0m[37m━━━━━━━[0m [1m0s[0m 0us/step
-[1m22528000/26421880[0m [32m━━━━━━━━━━━━━━━━━[0m[37m━━━[0m [1m0s[0m 0us/step
+[1m 4743168/26421880[0m [32m━━━[0m[37m━━━━━━━━━━━━━━━━━[0m [1m0s[0m 0us/step
+[1m13721600/26421880[0m [32m━━━━━━━━━━[0m[37m━━━━━━━━━━[0m [1m0s[0m 0us/step
+[1m23076864/26421880[0m [32m━━━━━━━━━━━━━━━━━[0m[37m━━━[0m [1m0s[0m 0us/step
 [1m26421880/26421880[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 0us/step
 Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/t10k-labels-idx1-ubyte.gz
 
@@ -2926,7 +2937,6 @@ Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-dataset
 Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/t10k-images-idx3-ubyte.gz
 
 [1m      0/4422102[0m [37m━━━━━━━━━━━━━━━━━━━━[0m [1m0s[0m 0s/step
-[1m4235264/4422102[0m [32m━━━━━━━━━━━━━━━━━━━[0m[37m━[0m [1m0s[0m 0us/step
 [1m4422102/4422102[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 0us/step</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>ropa_entrena <span class="ot">&lt;-</span> ropa_datos<span class="sc">$</span>train </span>
@@ -3010,7 +3020,7 @@ Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-dataset
 <div class="cell">
 <div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>preds_mat <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo_ropa, x_prueba)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>313/313 - 0s - 687us/step</code></pre>
+<pre><code>313/313 - 0s - 979us/step</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(preds_mat)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
