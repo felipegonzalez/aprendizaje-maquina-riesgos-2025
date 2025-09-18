@@ -20,6 +20,8 @@ book:
     - 12-arboles.qmd
     - 13-arboles-boosting.qmd
     - 15-validacion-problemas.qmd
+    - 16-reduccion-dim.qmd
+    - 17-recom-factorizacion.qmd
   appendices:
     - 81-apendice-descenso.qmd
     - 82-apendice-descenso-estocastico.qmd
